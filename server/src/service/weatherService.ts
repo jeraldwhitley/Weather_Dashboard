@@ -65,7 +65,7 @@ class WeatherService {
   }
 
   private buildGeocodeQuery(city: string): string {
-    console.log(this.apiKey, "api keyyyyy")
+    console.log(this.apiKey, "API Key")
     return `${this.baseURL}weather?q=${city}&appid=${this.apiKey}&units=imperial`;
   }
 
@@ -90,14 +90,14 @@ class WeatherService {
 
    
     const currentWeather: Weather = this.parseCurrentWeather(data.list[0]);
-    console.log(currentWeather, "probably the same thing")
+    console.log(currentWeather, "Current Weather")
     const forecast: Weather[] = this.buildForecastArray(currentWeather, data.list)
-    console.log(forecast, "this be the forecast");
+    console.log(forecast, "Forecast");
     return forecast;
   }
 
   private parseCurrentWeather(response: any): Weather {
-    console.log(response, "parse current weather")
+    console.log(response, "Parse Current Weather")
     const parsedDate = dayjs.unix(response.dt).format('M/D/YYYY');
     return {
       city: this.city,
@@ -114,7 +114,7 @@ class WeatherService {
   private buildForecastArray(currentWeather: Weather, weatherData: any[]): Weather[] {
     const weatherForecast: Weather[] = [currentWeather]
     const filteredWeather = weatherData.filter((day) => day.dt_txt.includes("12:00:00"))
-   console.log(weatherData,"444444444444444444")
+   console.log(weatherData,"Weather Data")
    
     // return filteredWeather.map((data: any) => ({
     //   city: this.city,
@@ -148,12 +148,12 @@ class WeatherService {
     }
     this.city = city
     try {
-      console.log('sup daddy 3')
+      console.log('API called')
       const coordinates = await this.fetchAndDestructureLocationData();
-      console.log('sup daddy 4')
+      console.log('Getting coordinates')
       // console.log(coordinates, "coordinates=================");
       const weatherData = await this.fetchWeatherData(coordinates);
-      console.log(weatherData, "weather D =======================");
+      console.log(weatherData, "Weather data");
       // return this.parseCurrentWeather(weatherData);
       return weatherData;
     } catch (error: any) {
